@@ -502,6 +502,8 @@
             box-shadow: var(--shadow-sm);
             margin-top: 12px;
             animation: fadeIn 0.3s ease;
+            max-height: 300px;
+            overflow-y: auto;
         }
 
         .dark-mode .search-results {
@@ -531,6 +533,42 @@
             border-radius: 6px;
             margin-bottom: 5px;
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .result-item .book-initial {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #d7ccc8, #bcaaa4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        .dark-mode .result-item .book-initial {
+            background: linear-gradient(135deg, #444, #333);
+            color: var(--text-light);
+        }
+
+        .result-item .book-info {
+            flex: 1;
+        }
+
+        .result-item .book-title {
+            font-weight: 500;
+            margin-bottom: 2px;
+            font-size: 0.9rem;
+        }
+
+        .result-item .book-author {
+            font-size: 0.75rem;
+            color: var(--primary-light);
         }
 
         .dark-mode .result-item {
@@ -548,6 +586,18 @@
         .result-item:last-child {
             border-bottom: none;
             margin-bottom: 0;
+        }
+
+        .no-results {
+            padding: 10px;
+            text-align: center;
+            color: var(--text-dark);
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        .dark-mode .no-results {
+            color: var(--text-light);
         }
 
         /* Animaciones al cargar */
@@ -627,6 +677,28 @@
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(5px);
         }
+
+        /* Indicador de búsqueda */
+        .search-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(139, 69, 19, 0.1);
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .dark-mode .search-indicator {
+            background: rgba(139, 69, 19, 0.2);
+            color: var(--text-light);
+        }
+
+        .search-indicator i {
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -643,14 +715,15 @@
     <div class="search-container" id="searchContainer">
         <div class="search-box">
             <i class="fas fa-search" style="color: var(--white);"></i>
-            <input type="text" id="searchInput" placeholder="Buscar libros...">
+            <input type="text" id="searchInput" placeholder="Buscar libros, autores...">
             <button class="close-btn" id="closeSearch"><i class="fas fa-times"></i></button>
         </div>
         <div class="search-results" id="searchResults">
             <h3>Resultados de búsqueda:</h3>
-            <div class="result-item" data-book="hp">Harry Potter y la piedra filosofal</div>
-            <div class="result-item" data-book="salem">LOS JUICIOS DE SALEM</div>
-            <div class="result-item" data-book="bosque">El Bosque Mágico</div>
+            <div class="search-indicator">
+                <i class="fas fa-info-circle"></i>
+                <div>Escribe para buscar en nuestra biblioteca</div>
+            </div>
         </div>
     </div>
     
@@ -658,7 +731,7 @@
     <div class="main-content" id="mainContent">
         <!-- Sección: FIERTO PORTER Y EL PASEO FÍSICOES -->
         <div class="section">
-            <h2 class="section-title">FIERTO PORTER Y EL PASEO FÍSICOES</h2>
+            <h2 class="section-title">CHECA LOS LIBROS DE LA MADRIGERA</h2>
             <div class="book-list" id="section1">
                 <div class="loading-section">
                     <div class="loading-spinner"></div>
@@ -699,29 +772,29 @@
         </div>
     </div>
     
-<!-- Navbar Inferior -->
-<div class="bottom-navbar">
-    <div class="nav-item active" id="navHome" onclick="location.href='inicio.html'">
-        <i class="fas fa-home"></i>
-        <span>Inicio</span>
+    <!-- Navbar Inferior -->
+    <div class="bottom-navbar">
+        <div class="nav-item active" id="navHome" onclick="location.href='inicio.html'">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </div>
+        <div class="nav-item" id="navSearch" onclick="document.getElementById('searchBtn').click()">
+            <i class="fas fa-search"></i>
+            <span>Buscar</span>
+        </div>
+        <div class="nav-item" id="navCreate" onclick="location.href='publicarlibro.html'">
+            <i class="fas fa-plus-circle"></i>
+            <span>Crear</span>
+        </div>
+        <div class="nav-item" id="navProfile" onclick="location.href='cuenta.html'">
+            <div class="user-icon">U</div>
+            <span>Perfil</span>
+        </div>
+        <div class="nav-item" id="navConfig" onclick="location.href='configuracion.html'">
+            <i class="fas fa-cog"></i>
+            <span>Config</span>
+        </div>
     </div>
-    <div class="nav-item" id="navSearch" onclick="document.getElementById('searchBtn').click()">
-        <i class="fas fa-search"></i>
-        <span>Buscar</span>
-    </div>
-    <div class="nav-item" id="navCreate" onclick="location.href='publicarlibro.html'">
-        <i class="fas fa-plus-circle"></i>
-        <span>Crear</span>
-    </div>
-    <div class="nav-item" id="navProfile" onclick="location.href='cuenta.html'">
-        <div class="user-icon">U</div>
-        <span>Perfil</span>
-    </div>
-    <div class="nav-item" id="navConfig" onclick="location.href='configuracion.html'">
-        <i class="fas fa-cog"></i>
-        <span>Config</span>
-    </div>
-</div>
 
     <script>
         // Elementos DOM
@@ -743,6 +816,7 @@
 
         // Almacén de libros
         let books = {};
+        let allBooks = [];
 
         // Función para obtener iniciales del título
         function getInitials(title) {
@@ -773,6 +847,9 @@
                 } else if (data.books) {
                     libros = data.books;
                 }
+                
+                // Almacenar todos los libros
+                allBooks = libros;
                 
                 // Organizar en secciones (primera mitad en sección 1, segunda en sección 2)
                 const half = Math.ceil(libros.length / 2);
@@ -827,6 +904,59 @@
                 // Agregar evento clic
                 bookElement.addEventListener('click', function() {
                     showBookDetail(libro.id);
+                });
+            });
+        }
+
+        // Función para buscar libros
+        function searchBooks(query) {
+            if (query.length < 1) {
+                searchResults.innerHTML = `
+                    <h3>Resultados de búsqueda:</h3>
+                    <div class="search-indicator">
+                        <i class="fas fa-info-circle"></i>
+                        <div>Escribe para buscar en nuestra biblioteca</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const searchTerm = query.toLowerCase();
+            let resultsHTML = '<h3>Resultados de búsqueda:</h3>';
+            let resultsCount = 0;
+            
+            // Filtrar libros por título, autor o descripción
+            const filteredBooks = allBooks.filter(libro => {
+                return libro.titulo.toLowerCase().includes(searchTerm) ||
+                       libro.autor.toLowerCase().includes(searchTerm) ||
+                       (libro.descripcion && libro.descripcion.toLowerCase().includes(searchTerm));
+            });
+            
+            if (filteredBooks.length === 0) {
+                resultsHTML += '<div class="no-results">No se encontraron libros</div>';
+            } else {
+                filteredBooks.forEach(libro => {
+                    resultsHTML += `
+                        <div class="result-item" data-book="${libro.id}">
+                            <div class="book-initial">${getInitials(libro.titulo)}</div>
+                            <div class="book-info">
+                                <div class="book-title">${libro.titulo}</div>
+                                <div class="book-author">${libro.autor}</div>
+                            </div>
+                        </div>
+                    `;
+                    resultsCount++;
+                });
+            }
+            
+            searchResults.innerHTML = resultsHTML;
+            
+            // Agregar eventos a los resultados
+            document.querySelectorAll('.result-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const bookId = this.getAttribute('data-book');
+                    hideSearch();
+                    showBookDetail(bookId);
                 });
             });
         }
@@ -891,37 +1021,16 @@
         searchInput.addEventListener('input', function() {
             if (this.value.length > 0) {
                 searchResults.style.display = 'block';
-                
-                // Filtrar libros
-                const searchTerm = this.value.toLowerCase();
-                let resultsHTML = '<h3>Resultados de búsqueda:</h3>';
-                let resultsCount = 0;
-                
-                for (const id in books) {
-                    const book = books[id];
-                    if (book.title.toLowerCase().includes(searchTerm)) {
-                        resultsHTML += `<div class="result-item" data-book="${id}">${book.title}</div>`;
-                        resultsCount++;
-                    }
-                }
-                
-                if (resultsCount === 0) {
-                    resultsHTML += '<p>No se encontraron resultados</p>';
-                }
-                
-                searchResults.innerHTML = resultsHTML;
-                
-                // Agregar eventos a los resultados
-                document.querySelectorAll('.result-item').forEach(item => {
-                    item.addEventListener('click', function() {
-                        const bookId = this.getAttribute('data-book');
-                        hideSearch();
-                        showBookDetail(bookId);
-                    });
-                });
-                
+                searchBooks(this.value);
             } else {
                 searchResults.style.display = 'none';
+                searchResults.innerHTML = `
+                    <h3>Resultados de búsqueda:</h3>
+                    <div class="search-indicator">
+                        <i class="fas fa-info-circle"></i>
+                        <div>Escribe para buscar en nuestra biblioteca</div>
+                    </div>
+                `;
             }
         });
 

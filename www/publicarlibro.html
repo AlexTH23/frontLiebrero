@@ -4,9 +4,299 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publicar Libro</title>
-    <link rel="stylesheet" href="css/publicarlibro.css">
-    <link rel="stylesheet" href="css/darkMode.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary: #8B4513;
+            --primary-dark: #5d2e0b;
+            --primary-light: #a05a2c;
+            --secondary: #5d4037;
+            --light-bg: #f5f1e8;
+            --dark-bg: #1a1a1a;
+            --text-light: #e0e0e0;
+            --text-dark: #3a2c1e;
+            --white: #ffffff;
+            --gray-light: #d7ccc8;
+            --accent: #8B0000;
+            --accent-hover: #A52A2A;
+            --accent-light: #b14545;
+            --accent-dark: #5a0000;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+
+        /* Navbar superior */
+        .top-navbar {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .top-navbar .back-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .top-navbar .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .top-navbar .title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 16px 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            transition: var(--transition);
+        }
+
+        .publicar-section {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .dark-mode .publicar-section {
+            background-color: #2d2d2d;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        #publicarLibroForm {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #publicarLibroForm input,
+        #publicarLibroForm select,
+        #publicarLibroForm textarea {
+            padding: 12px 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            background: var(--white);
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .dark-mode #publicarLibroForm input,
+        .dark-mode #publicarLibroForm select,
+        .dark-mode #publicarLibroForm textarea {
+            background: #333;
+            color: var(--text-light);
+            border-color: #444;
+        }
+
+        #publicarLibroForm input:focus,
+        #publicarLibroForm select:focus,
+        #publicarLibroForm textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
+        }
+
+        #publicarLibroForm textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .publish-btn {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .publish-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .publish-btn:active {
+            transform: translateY(1px);
+        }
+
+        #publicarMensaje {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        #publicarMensaje.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        #publicarMensaje.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--secondary);
+        }
+
+        .dark-mode .form-group label {
+            color: #e0e0e0;
+        }
+
+        .required-marker {
+            color: var(--accent);
+        }
+
+        .bottom-navbar {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 10px 8px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 6px 8px;
+            border-radius: 8px;
+            flex: 1;
+            max-width: 60px;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+            transition: var(--transition);
+        }
+
+        .nav-item.active i {
+            transform: scale(1.1);
+        }
+
+        .nav-item span {
+            font-size: 0.65rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .user-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
     <div class="top-navbar">
@@ -17,31 +307,189 @@
         <div class="publicar-section">
             <h2 class="section-title">Publicar un nuevo libro</h2>
             <form id="publicarLibroForm">
-                <input type="text" id="titulo" placeholder="Título del libro" required>
-                <input type="text" id="autor" placeholder="Autor">
-                <textarea id="descripcion" placeholder="Descripción" rows="4" required></textarea>
-                <input type="text" id="genero" placeholder="Género">
-                <select id="idioma" required>
-                    <option value="">Selecciona un idioma</option>
-                    <option value="Español">Español</option>
-                    <option value="Inglés">Inglés</option>
-                    <option value="Francés">Francés</option>
-                    <option value="Alemán">Alemán</option>
-                    <option value="Italiano">Italiano</option>
-                    <option value="Portugués">Portugués</option>
-                    <option value="Chino">Chino</option>
-                    <option value="Japonés">Japonés</option>
-                    <option value="Ruso">Ruso</option>
-                    <option value="Otro">Otro</option>
-                </select>
-                <input type="number" id="anoPublicacion" placeholder="Año de publicación" min="1000" max="9999" maxlength="4" pattern="\\d{4}" required>
-                <input type="file" id="portada" accept="image/*" required>
-                <input type="file" id="archivo" accept="application/pdf" required>
-                <button type="submit" class="publish-btn">Publicar</button>
+                <div class="form-group">
+                    <label for="titulo">Título <span class="required-marker">*</span></label>
+                    <input type="text" id="titulo" placeholder="Título del libro" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="autor">Autor</label>
+                    <input type="text" id="autor" placeholder="Autor del libro">
+                </div>
+                
+                <div class="form-group">
+                    <label for="descripcion">Descripción <span class="required-marker">*</span></label>
+                    <textarea id="descripcion" placeholder="Descripción del libro" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="genero">Género</label>
+                    <input type="text" id="genero" placeholder="Género del libro">
+                </div>
+                
+                <div class="form-group">
+                    <label for="idioma">Idioma <span class="required-marker">*</span></label>
+                    <select id="idioma" required>
+                        <option value="">Selecciona un idioma</option>
+                        <option value="Español">Español</option>
+                        <option value="Inglés">Inglés</option>
+                        <option value="Francés">Francés</option>
+                        <option value="Alemán">Alemán</option>
+                        <option value="Italiano">Italiano</option>
+                        <option value="Portugués">Portugués</option>
+                        <option value="Chino">Chino</option>
+                        <option value="Japonés">Japonés</option>
+                        <option value="Ruso">Ruso</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="anoPublicacion">Año de publicación <span class="required-marker">*</span></label>
+                    <input type="number" id="anoPublicacion" placeholder="Año de publicación" min="1000" max="9999" maxlength="4" pattern="\\d{4}" required>
+                </div>
+                
+                <button type="submit" class="publish-btn">Publicar Libro</button>
             </form>
             <div id="publicarMensaje"></div>
         </div>
     </div>
-    <script src="js/publicarlibro.js"></script>
+    
+    <!-- Navbar Inferior -->
+    <div class="bottom-navbar">
+        <div class="nav-item" id="navHome" onclick="location.href='inicio.html'">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </div>
+        <div class="nav-item" id="navSearch" onclick="document.getElementById('searchBtn').click()">
+            <i class="fas fa-search"></i>
+            <span>Buscar</span>
+        </div>
+        <div class="nav-item active" id="navCreate" onclick="location.href='publicarlibro.html'">
+            <i class="fas fa-plus-circle"></i>
+            <span>Crear</span>
+        </div>
+        <div class="nav-item" id="navProfile" onclick="location.href='cuenta.html'">
+            <div class="user-icon">U</div>
+            <span>Perfil</span>
+        </div>
+        <div class="nav-item" id="navConfig" onclick="location.href='configuracion.html'">
+            <i class="fas fa-cog"></i>
+            <span>Config</span>
+        </div>
+    </div>
+
+    <script>
+        // Elementos DOM
+        const publicarForm = document.getElementById('publicarLibroForm');
+        const publicarMensaje = document.getElementById('publicarMensaje');
+        
+        // Configuración de la API
+        const CORS_PROXY = 'https://corsproxy.io/?';
+        const API_BASE_URL = 'https://liebrero-st86n.ondigitalocean.app/libros';
+        const FULL_API_URL = CORS_PROXY + encodeURIComponent(API_BASE_URL);
+
+        // Función para mostrar mensajes
+        function showMessage(message, isSuccess) {
+            publicarMensaje.textContent = message;
+            publicarMensaje.className = isSuccess ? 'success' : 'error';
+            publicarMensaje.style.display = 'block';
+            
+            // Ocultar el mensaje después de 5 segundos
+            setTimeout(() => {
+                publicarMensaje.style.display = 'none';
+            }, 5000);
+        }
+
+        // Función para guardar el libro
+        async function savePost(event) {
+            if (event) event.preventDefault();
+            
+            console.log("Función savePost ejecutándose");
+
+            const titulo = document.getElementById('titulo').value;
+            const autor = document.getElementById('autor').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const genero = document.getElementById('genero').value;
+            const idioma = document.getElementById('idioma').value;
+            const anoPublicacion = document.getElementById('anoPublicacion').value;
+
+            // Validación básica
+            if (!titulo.trim() || !descripcion.trim() || !idioma || !anoPublicacion) {
+                showMessage('Título, descripción, idioma y año de publicación son obligatorios', false);
+                return;
+            }
+
+            const postData = { 
+                titulo: titulo, 
+                autor: autor,
+                descripcion: descripcion, 
+                genero: genero, 
+                idioma: idioma, 
+                anoPublicacion: parseInt(anoPublicacion) || new Date().getFullYear(),
+                // Estos campos no se usan en este formulario
+                portadaJSON: "",
+                archivoJSON: ""
+            };
+
+            console.log("Datos a enviar:", postData);
+
+            try {
+                console.log("Enviando datos a:", API_BASE_URL);
+
+                const res = await fetch(FULL_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                console.log("Response status:", res.status);
+                
+                const responseText = await res.text();
+                console.log("Raw response:", responseText);
+                
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                    console.log("Parsed response:", data);
+                } catch (e) {
+                    console.error("Failed to parse JSON:", e);
+                    throw new Error(`Respuesta JSON inválida: ${responseText}`);
+                }
+                
+                if (!res.ok) {
+                    throw new Error(`Error del servidor: ${res.status} - ${responseText}`);
+                }
+                
+                showMessage('✅ Libro creado exitosamente', true);
+                
+                // Limpiar el formulario después de guardar
+                publicarForm.reset();
+                
+            } catch (error) {
+                console.error('Error en savePost:', error);
+                showMessage(`❌ Error al guardar el libro: ${error.message}`, false);
+            }
+        }
+
+        // Evento de envío del formulario
+        publicarForm.addEventListener('submit', savePost);
+
+        // Navegación inferior
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remover clase activa de todos
+                document.querySelectorAll('.nav-item').forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Agregar clase activa al seleccionado
+                this.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
