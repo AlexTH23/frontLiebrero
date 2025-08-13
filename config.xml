@@ -6,17 +6,17 @@
     </author>
 
     <!-- Icono principal -->
-<icon src="iconoApp.png" />
+<icon src="www/img/iconoApp.png" />
 
     <platform name="android">
         <allow-intent href="*" />
         <access origin="*" />
         <!-- Icono específico para Android -->
-        <icon src="img/iconoApp.jpg" density="mdpi" />
-        <icon src="img/iconoApp.jpg" density="hdpi" />
-        <icon src="img/iconoApp.jpg" density="xhdpi" />
-        <icon src="img/iconoApp.jpg" density="xxhdpi" />
-        <icon src="img/iconoApp.jpg" density="xxxhdpi" />
+        <icon src="www/img/iconoApp.png" density="mdpi" />
+        <icon src="www/img/iconoApp.png" density="hdpi" />
+        <icon src="www/img/iconoApp.png" density="xhdpi" />
+        <icon src="www/img/iconoApp.png" density="xxhdpi" />
+        <icon src="www/img/iconoApp.png" density="xxxhdpi" />
     </platform>
 
     <content src="login.html" />
