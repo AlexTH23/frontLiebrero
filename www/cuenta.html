@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta - Liebrero</title>
+    
+    <!-- Script para aplicar modo oscuro ANTES de renderizar -->
+    <script>
+        (function() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.documentElement.style.setProperty('--bg-primary', '#1a1a1a');
+                document.documentElement.style.setProperty('--bg-secondary', '#2d2d2d');
+                document.documentElement.style.setProperty('--bg-tertiary', '#333333');
+                document.documentElement.style.setProperty('--text-primary', '#e0e0e0');
+                document.documentElement.style.setProperty('--text-secondary', '#b0b0b0');
+                document.documentElement.style.setProperty('--border-color', '#444444');
+                document.documentElement.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.5)');
+                document.documentElement.style.setProperty('--accent-color', '#8B0000');
+                document.documentElement.style.setProperty('--accent-hover', '#A52A2A');
+                document.body.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    
+    <link rel="stylesheet" href="css/cuenta.css">
+    <link rel="stylesheet" href="css/darkMode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar Superior -->
+    <div class="top-navbar">
+        <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+        <div class="title">MI CUENTA</div>
+    </div>
+    
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <div class="section-title">Tu Perfil</div>
+        
+        <div class="status-message success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i> ¡Tus cambios se han guardado correctamente!
+        </div>
+        
+        <div class="profile-section">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+                <div class="change-photo">Cambiar foto</div>
+            </div>
+            <div class="profile-info">
+                <h2 id="userName">Carlos García</h2>
+                <p id="userEmail">carlos@biblioteca.com</p>
+                <p>Miembro desde: Enero 2023</p>
+            </div>
+        </div>
+        
+        <div class="account-form">
+            <div class="form-group">
+                <label for="firstName"><i class="fas fa-user form-icon"></i> Nombre</label>
+                <input type="text" id="firstName" class="form-control" value="Carlos">
+            </div>
+            
+            <div class="form-group">
+                <label for="lastName"><i class="fas fa-user-tag form-icon"></i> Apellido</label>
+                <input type="text" id="lastName" class="form-control" value="García">
+            </div>
+            
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope form-icon"></i> Correo electrónico</label>
+                <input type="email" id="email" class="form-control" value="carlos@biblioteca.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone"><i class="fas fa-phone form-icon"></i> Teléfono</label>
+                <input type="tel" id="phone" class="form-control" value="+34 678 901 234">
+            </div>
+            
+            <div class="action-buttons">
+                <button type="button" class="btn btn-secondary" id="cancelBtn">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button type="button" class="btn btn-primary" id="saveBtn">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </div>
+            
+            <button class="btn btn-change-password">
+                <i class="fas fa-lock"></i> Cambiar contraseña
+            </button>
+        </div>
+    </div>
+
+    <script src="js/darkMode.js"></script>
+    <script src="js/cuenta.js"></script>
+    <script src="js/app_fixed.js"></script>
+
+</body>
+</html>

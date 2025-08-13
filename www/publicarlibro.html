@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Libro</title>
+    <link rel="stylesheet" href="css/publicarlibro.css">
+    <link rel="stylesheet" href="css/darkMode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="top-navbar">
+        <button class="back-btn" onclick="location.href='inicio.html'"><i class="fas fa-arrow-left"></i></button>
+        <div class="title">PUBLICAR LIBRO</div>
+    </div>
+    <div class="main-content">
+        <div class="publicar-section">
+            <h2 class="section-title">Publicar un nuevo libro</h2>
+            <form id="publicarLibroForm">
+                <input type="text" id="titulo" placeholder="Título del libro" required>
+                <input type="text" id="autor" placeholder="Autor">
+                <textarea id="descripcion" placeholder="Descripción" rows="4" required></textarea>
+                <input type="text" id="genero" placeholder="Género">
+                <select id="idioma" required>
+                    <option value="">Selecciona un idioma</option>
+                    <option value="Español">Español</option>
+                    <option value="Inglés">Inglés</option>
+                    <option value="Francés">Francés</option>
+                    <option value="Alemán">Alemán</option>
+                    <option value="Italiano">Italiano</option>
+                    <option value="Portugués">Portugués</option>
+                    <option value="Chino">Chino</option>
+                    <option value="Japonés">Japonés</option>
+                    <option value="Ruso">Ruso</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <input type="number" id="anoPublicacion" placeholder="Año de publicación" min="1000" max="9999" maxlength="4" pattern="\\d{4}" required>
+                <input type="file" id="portada" accept="image/*" required>
+                <input type="file" id="archivo" accept="application/pdf" required>
+                <button type="submit" class="publish-btn">Publicar</button>
+            </form>
+            <div id="publicarMensaje"></div>
+        </div>
+    </div>
+    <script src="js/publicarlibro.js"></script>
+</body>
+</html>

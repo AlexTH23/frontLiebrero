@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - Liebrero</title>
+    
+    <!-- Script para aplicar modo oscuro ANTES de renderizar -->
+    <script>
+        (function() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.documentElement.style.setProperty('--bg-primary', '#1a1a1a');
+                document.documentElement.style.setProperty('--bg-secondary', '#2d2d2d');
+                document.documentElement.style.setProperty('--bg-tertiary', '#333333');
+                document.documentElement.style.setProperty('--text-primary', '#e0e0e0');
+                document.documentElement.style.setProperty('--text-secondary', '#b0b0b0');
+                document.documentElement.style.setProperty('--border-color', '#444444');
+                document.documentElement.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.5)');
+                document.documentElement.style.setProperty('--accent-color', '#8B0000');
+                document.documentElement.style.setProperty('--accent-hover', '#A52A2A');
+                document.body.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    
+    <link rel="stylesheet" href="css/configuraciones.css">
+    <link rel="stylesheet" href="css/darkMode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar Superior -->
+    <div class="top-navbar">
+        <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+        <div class="title">CONFIGURACIÓN</div>
+    </div>
+    
+    <!-- Contenido Principal - Vista de Configuración -->
+    <div class="main-content" id="mainContent">
+        <div class="config-view" id="configView">
+            <div class="config-section">
+                <div class="config-header">CUENTA</div>
+                <ul class="config-list">
+                    <li class="config-item" id="editProfile">
+                        <div class="item-label">
+                            <i class="fas fa-user-edit"></i>
+                            <span>Editar perfil</span>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="config-section">
+                <div class="config-header">OPCIONES</div>
+                <ul class="config-list">
+                                         <li class="config-item">
+                         <div class="item-label">
+                             <i class="fas fa-moon"></i>
+                             <span>Modo oscuro</span>
+                         </div>
+                         <label class="switch">
+                             <input type="checkbox" id="darkModeSwitch" class="dark-mode-toggle">
+                             <span class="slider"></span>
+                         </label>
+                     </li>
+                    <li class="config-item" id="notifications">
+                        <div class="item-label">
+                            <i class="fas fa-bell"></i>
+                            <span>Notificaciones</span>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </li>
+                    <li class="config-item" id="downloads">
+                        <div class="item-label">
+                            <i class="fas fa-download"></i>
+                            <span>Descargas</span>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </li>
+                    <li class="config-item" id="appSettings">
+                        <div class="item-label">
+                            <i class="fas fa-cog"></i>
+                            <span>Aplicación</span>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="config-section">
+                <ul class="config-list">
+                    <li class="config-item" id="feedbackBtn">
+                        <div class="item-label">
+                            <i class="fas fa-comment-dots"></i>
+                            <span>Danos tu opinión</span>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </li>
+                </ul>
+            </div>
+            
+            <button class="logout-btn" id="logoutBtn">
+                Cerrar sesión
+            </button>
+        </div>
+        
+        <!-- Vista de Opinión -->
+        <div class="feedback-view" id="feedbackView">
+            <div class="feedback-section">
+                <div class="feedback-header">
+                    <h1 class="feedback-title">DANOS TU OPINIÓN</h1>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">De:</label>
+                    <input type="email" class="form-input" id="emailInput" placeholder="tu@email.com" required>
+                    <div class="form-note">Tu dirección de correo electrónico</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Para:</label>
+                    <input type="text" class="form-input" value="feedback@liebreros.io" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Motivo:</label>
+                    <input type="text" class="form-input" id="subjectInput" placeholder="Opiniones sobre la aplicación de Liebreros" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tus comentarios:</label>
+                    <textarea class="form-input" id="commentsInput" placeholder="Tus comentarios nos ayudarán a mejorar tu experiencia, cuentanos tu opinión..." required></textarea>
+                </div>
+                
+                <button class="send-btn" id="sendFeedbackBtn">
+                    Enviar opinión
+                </button>
+            </div>
+        </div>
+    </div>
+    
+<!-- Navbar Inferior -->
+<div class="bottom-navbar">
+    <div class="nav-item active" id="navHome" onclick="location.href='inicio.html'">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+    </div>
+    <div class="nav-item" id="navSearch">
+        <i class="fas fa-search"></i>
+        <span>Buscar</span>
+    </div>
+    <div class="nav-item" id="navLibrary" onclick="location.href='bibliotecapersonal.html'">
+        <i class="fas fa-book"></i>
+        <span>Biblioteca</span>
+    </div>
+    <div class="nav-item" id="navCreate" onclick="location.href='publicarlibro.html'">
+        <i class="fas fa-plus-circle"></i>
+        <span>Crear</span>
+    </div>
+    <div class="nav-item" id="navProfile" onclick="location.href='cuenta.html'">
+        <div class="user-icon">U</div>
+        <span>Perfil</span>
+    </div>
+    <div class="nav-item" id="navConfig" onclick="location.href='configuracion.html'">
+        <i class="fas fa-cog"></i>
+        <span>Config</span>
+    </div>
+</div>
+
+    <script src="js/darkMode.js"></script>
+    <script src="js/app_fixed.js"></script>
+    <script src="js/configuracion.js"></script>
+</body>
+</html>

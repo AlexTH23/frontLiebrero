@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Liebrero</title>
+    
+    <!-- Script para aplicar modo oscuro ANTES de renderizar -->
+    <script>
+        (function() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.documentElement.style.setProperty('--bg-primary', '#1a1a1a');
+                document.documentElement.style.setProperty('--bg-secondary', '#2d2d2d');
+                document.documentElement.style.setProperty('--bg-tertiary', '#333333');
+                document.documentElement.style.setProperty('--text-primary', '#e0e0e0');
+                document.documentElement.style.setProperty('--text-secondary', '#b0b0b0');
+                document.documentElement.style.setProperty('--border-color', '#444444');
+                document.documentElement.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.5)');
+                document.documentElement.style.setProperty('--accent-color', '#8B0000');
+                document.documentElement.style.setProperty('--accent-hover', '#A52A2A');
+                document.body.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/darkMode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="logo-text">Liebreros</div>
+        </div>
+        
+        <!-- Formulario de Login -->
+        <div class="form-container">
+            <h2 class="form-title">Iniciar Sesión</h2>
+            
+            <div class="form-group">
+                <label class="form-label">Correo Electrónico</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" class="form-input" id="loginEmail" placeholder="tucorreo@ejemplo.com" required>
+                </div>
+                <div class="error-message" id="loginEmailError">Por favor ingresa un email válido</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Contraseña</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+                    <button class="password-toggle" id="loginPasswordToggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="error-message" id="loginPasswordError">La contraseña debe tener al menos 6 caracteres</div>
+            </div>
+            
+            
+            <button class="submit-btn" id="loginBtn">Iniciar Sesión</button>
+            
+            <div class="switch-form">
+                ¿No tienes una cuenta? <a href="registro.html" class="form-link">Regístrate</a>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/darkMode.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/app_fixed.js"></script>
+
+</body>
+</html>

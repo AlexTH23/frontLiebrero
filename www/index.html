@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador de Libros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .form-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #savePostButton {
+            background-color: #28a745;
+            color: white;
+        }
+        #cancelPostButton {
+            background-color: #6c757d;
+            color: white;
+        }
+        #verifyButton {
+            background-color: #007bff;
+            color: white;
+        }
+        #portada-preview {
+            max-width: 200px;
+            max-height: 200px;
+            display: none;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #pdf-info {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            display: none;
+        }
+        .file-input-container {
+            margin: 15px 0;
+        }
+        .file-input-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Formulario de publicación -->
+    <div>
+        <h2>Crear Publicación</h2>
+        <input type="hidden" id="postIdToEdit" />
+
+        <input type="text" id="titulo" placeholder="Título del libro" required />
+        <div id="titulo-error" class="error-message"></div>
+
+        <input type="text" id="autor" placeholder="Autor del libro" />
+        
+        <textarea id="txdescripcion" placeholder="Descripción del libro" rows="4" required></textarea>
+        <div id="descripcion-error" class="error-message"></div>
+        
+        <input type="text" id="genero" placeholder="Género literario" />
+        <input type="text" id="idioma" placeholder="Idioma del libro" />
+        <input type="number" id="anoPublicacion" placeholder="Año de publicación" />
+
+        <!-- Campo para imagen de portada -->
+        <div class="file-input-container">
+            <label class="file-input-label" for="portada">Portada del libro (imagen):</label>
+            <input type="file" id="portada" accept="image/*" />
+            <img id="portada-preview" alt="Vista previa de la portada">
+        </div>
+
+        <!-- Campo para archivo PDF -->
+        <div class="file-input-container">
+            <label class="file-input-label" for="archivo">Archivo del libro (PDF):</label>
+            <input type="file" id="archivo" accept="application/pdf" />
+            <div id="pdf-info"></div>
+        </div>
+
+        <div class="form-actions">
+            <button id="savePostButton">Guardar</button>
+            <button id="cancelPostButton">Cancelar</button>
+            <button id="verifyButton">Verificar Libros</button>
+        </div>
+    </div>
+
+    <script>
+       const CORS_PROXY = 'https://corsproxy.io/?';
+const API_BASE_URL = 'https://liebrero-st86n.ondigitalocean.app';
+const FULL_API_URL = CORS_PROXY + encodeURIComponent(API_BASE_URL);
+
+// Convierte archivo a Base64
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+// Valida tipo de archivo
+function isValidFileType(file, validTypes) {
+    return validTypes.includes(file.type);
+}
+
+// Validar formulario
+function validateForm() {
+    const requiredFields = ['titulo', 'autor', 'txdescripcion', 'genero', 'idioma', 'anoPublicacion'];
+    for (let fieldId of requiredFields) {
+        const value = document.getElementById(fieldId)?.value.trim();
+        if (!value) return false;
+    }
+    return true;
+}
+
+// Preparar datos
+async function preparePostData() {
+    const portadaFile = document.getElementById('portada').files[0];
+    const archivoFile = document.getElementById('archivo').files[0];
+
+    return {
+        titulo: document.getElementById('titulo').value.trim(),
+        autor: document.getElementById('autor').value.trim(),
+        descripcion: document.getElementById('txdescripcion').value.trim(),
+        genero: document.getElementById('genero').value.trim(),
+        idioma: document.getElementById('idioma').value.trim(),
+        anoPublicacion: document.getElementById('anoPublicacion').value.trim(),
+        portada: portadaFile ? await fileToBase64(portadaFile) : null,
+        archivo: archivoFile ? await fileToBase64(archivoFile) : null
+    };
+}
+
+// Guardar post
+async function savePost(event) {
+    if (event) event.preventDefault(); // Evita recarga de formulario
+
+    console.log("Iniciando proceso de guardado...");
+
+    const saveButton = document.getElementById('savePostButton');
+    saveButton.disabled = true;
+    saveButton.textContent = 'Guardando...';
+
+    try {
+        if (!validateForm()) {
+            throw new Error('Por favor complete los campos requeridos');
+        }
+
+        const postData = await preparePostData();
+        console.log("Datos preparados:", postData);
+
+        const response = await fetchWithTimeout(FULL_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        }, 8000);
+
+        const result = await processResponse(response);
+
+        alert('¡Publicación guardada exitosamente!');
+        console.log("Respuesta del servidor:", result);
+        clearForm();
+
+    } catch (error) {
+        console.error("Error en savePost:", error);
+        handleFetchError(error);
+    } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = 'Guardar';
+    }
+}
+
+// Fetch con timeout
+function fetchWithTimeout(url, options, timeout = 8000) {
+    return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Timeout: El servidor no respondió a tiempo')), timeout))
+    ]);
+}
+
+// Procesar respuesta
+async function processResponse(response) {
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error del servidor (${response.status}): ${errorText}`);
+    }
+    return await response.json();
+}
+
+// Manejar errores
+function handleFetchError(error) {
+    let errorMessage = 'Error al guardar la publicación';
+
+    if (error.message.includes('Failed to fetch')) {
+        errorMessage = 'No se pudo conectar al servidor. Verifica:\n1. Tu conexión a internet\n2. Que la URL del servidor sea correcta\n3. Que el servidor esté en funcionamiento';
+    } else if (error.message.includes('Timeout')) {
+        errorMessage = 'El servidor no respondió a tiempo. Intenta nuevamente más tarde.';
+    } else {
+        errorMessage = error.message;
+    }
+
+    alert(errorMessage);
+}
+
+// Limpiar formulario
+function clearForm() {
+    document.getElementById('titulo').value = '';
+    document.getElementById('autor').value = '';
+    document.getElementById('txdescripcion').value = '';
+    document.getElementById('genero').value = '';
+    document.getElementById('idioma').value = '';
+    document.getElementById('anoPublicacion').value = '';
+    document.getElementById('portada').value = '';
+    document.getElementById('archivo').value = '';
+}
+
+// Vista previa de imagen
+function previewImage(event) {
+    const preview = document.getElementById('portada-preview');
+    const file = event.target.files[0];
+
+    if (file && isValidFileType(file, ['image/jpeg', 'image/png', 'image/gif'])) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.display = 'none';
+    }
+}
+
+// Info de PDF
+function showPdfInfo(event) {
+    const pdfInfo = document.getElementById('pdf-info');
+    const file = event.target.files[0];
+
+    if (file && isValidFileType(file, ['application/pdf'])) {
+        pdfInfo.textContent = `PDF seleccionado: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+        pdfInfo.style.display = 'block';
+    } else {
+        pdfInfo.style.display = 'none';
+    }
+}
+
+// Verificar libros
+async function verifyBooks() {
+    console.log("Verificando libros en la base de datos...");
+
+    try {
+        const res = await fetch(FULL_API_URL);
+        console.log("GET Response status:", res.status);
+
+        const responseText = await res.text();
+        console.log("GET Raw response:", responseText);
+
+        let data;
+        try {
+            data = JSON.parse(responseText);
+            console.log("Libros encontrados:", data);
+
+            const librosConArchivos = data.filter(libro => libro.archivo || libro.portada);
+            alert(`Se encontraron ${data.length} libros (${librosConArchivos.length} con archivos adjuntos)`);
+        } catch (e) {
+            console.error("Failed to parse GET response:", e);
+            alert("Error al verificar libros: " + responseText);
+        }
+
+    } catch (error) {
+        console.error("Error al verificar libros:", error);
+        alert("Error al conectar con la API: " + error.message);
+    }
+}
+
+// Inicializar eventos
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("✅ Script cargado y DOM listo");
+
+    const portadaInput = document.getElementById('portada');
+    const archivoInput = document.getElementById('archivo');
+    const saveButton = document.getElementById('savePostButton');
+
+    if (portadaInput) portadaInput.addEventListener('change', previewImage);
+    if (archivoInput) archivoInput.addEventListener('change', showPdfInfo);
+
+    if (saveButton) {
+        console.log("✅ Botón encontrado");
+        saveButton.addEventListener('click', savePost);
+    } else {
+        console.error("❌ No se encontró el botón con ID 'savePostButton'");
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Personal - Liebrero</title>
+    
+    <!-- Script para aplicar modo oscuro ANTES de renderizar -->
+    <script>
+        (function() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.documentElement.style.setProperty('--bg-primary', '#1a1a1a');
+                document.documentElement.style.setProperty('--bg-secondary', '#2d2d2d');
+                document.documentElement.style.setProperty('--bg-tertiary', '#333333');
+                document.documentElement.style.setProperty('--text-primary', '#e0e0e0');
+                document.documentElement.style.setProperty('--text-secondary', '#b0b0b0');
+                document.documentElement.style.setProperty('--border-color', '#444444');
+                document.documentElement.style.setProperty('--shadow-color', 'rgba(0, 0, 0, 0.5)');
+                document.documentElement.style.setProperty('--accent-color', '#8B0000');
+                document.documentElement.style.setProperty('--accent-hover', '#A52A2A');
+                document.body.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    
+    <link rel="stylesheet" href="css/bibliotecapersonal.css">
+    <link rel="stylesheet" href="css/darkMode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar Superior -->
+    <div class="top-navbar">
+        <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+        <div class="title">MI BIBLIOTECA</div>
+        <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+    </div>
+    
+    <!-- Buscador -->
+    <div class="search-container" id="searchContainer">
+        <div class="search-box">
+            <i class="fas fa-search" style="color: #8B4513;"></i>
+            <input type="text" id="searchInput" placeholder="Buscar en tu biblioteca...">
+            <button class="close-btn" id="closeSearch"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    
+    <!-- Contenido Principal - Vista de Biblioteca Personal -->
+    <div class="main-content" id="mainContent">
+        <div class="library-view" id="libraryView">
+            <!-- Filtros -->
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="reading">Leyendo</button>
+                <button class="filter-btn" data-filter="finished">Terminados</button>
+                <button class="filter-btn" data-filter="favorites">Favoritos</button>
+                <button class="filter-btn" data-filter="wishlist">Por leer</button>
+                <button class="filter-btn" data-filter="fantasia">Fantasía</button>
+            </div>
+            
+            <!-- Libros -->
+            <div class="book-list" id="bookList">
+                <!-- Los libros se cargarán dinámicamente desde JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vista de Detalle de Libro -->
+    <div class="book-detail" id="bookDetail">
+        <button class="back-btn" id="detailBackBtn"><i class="fas fa-arrow-left"></i></button>
+        <div class="book-header">
+            <div class="book-cover-large" id="detailCover">
+                <span class="initial" id="detailInitial">HP</span>
+            </div>
+            <div class="book-info-detail">
+                <h1 class="book-title-large" id="detailTitle">Harry Potter y la piedra filosofal</h1>
+                <div class="book-author-large" id="detailAuthor">J.K. Rowling</div>
+                
+                <div class="book-meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Género</div>
+                        <div class="meta-value" id="detailGenre">Fantasía</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Idioma</div>
+                        <div class="meta-value" id="detailLanguage">Español</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Año</div>
+                        <div class="meta-value" id="detailYear">1997</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Estado</div>
+                        <div class="meta-value" id="detailStatus">Leyendo</div>
+                    </div>
+                </div>
+                
+                <div class="book-description" id="detailDescription">
+                    Harry Potter y la piedra filosofal es el primer libro de la serie literaria Harry Potter, escrito por la autora británica J.K. Rowling. Sigue la historia de Harry Potter, un niño que descubre en su undécimo cumpleaños que es un mago. Harry es invitado a asistir al Colegio Hogwarts de Magia y Hechicería, donde comienza a entrenar como mago.
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn read-btn" id="readBtn">
+                        <i class="fas fa-book-open"></i> Leer
+                    </button>
+                    <button class="action-btn favorite-btn" id="favoriteBtn">
+                        <i class="fas fa-star"></i> Favorito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<!-- Navbar Inferior -->
+<div class="bottom-navbar">
+    <div class="nav-item active" id="navHome" onclick="location.href='inicio.html'">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+    </div>
+    <div class="nav-item" id="navSearch">
+        <i class="fas fa-search"></i>
+        <span>Buscar</span>
+    </div>
+    <div class="nav-item" id="navLibrary" onclick="location.href='bibliotecapersonal.html'">
+        <i class="fas fa-book"></i>
+        <span>Biblioteca</span>
+    </div>
+    <div class="nav-item" id="navCreate" onclick="location.href='publicarlibro.html'">
+        <i class="fas fa-plus-circle"></i>
+        <span>Crear</span>
+    </div>
+    <div class="nav-item" id="navProfile" onclick="location.href='cuenta.html'">
+        <div class="user-icon">U</div>
+        <span>Perfil</span>
+    </div>
+    <div class="nav-item" id="navConfig" onclick="location.href='configuracion.html'">
+        <i class="fas fa-cog"></i>
+        <span>Config</span>
+    </div>
+</div>
+
+
+    <script src="js/darkMode.js"></script>
+    <script src="js/bibliotecapersonal.js"></script>
+    <script src="js/app_fixed.js"></script>
+</body>
+</html>

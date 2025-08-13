@@ -1,0 +1,224 @@
+/* Variables CSS para Modo Oscuro/Claro */
+:root {
+    /* Colores de fondo */
+    --bg-primary: #f5f1e8;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f8f4ed;
+    
+    /* Colores de texto */
+    --text-primary: #3a2c1e;
+    --text-secondary: #5d4037;
+    
+    /* Colores de borde */
+    --border-color: #d7ccc8;
+    
+    /* Colores de sombra */
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    
+    /* Colores de acento */
+    --accent-color: #8B0000; /* Vino tinto (dark red) */
+    --accent-hover: #A52A2A; /* Vino tinto hover (indian red) */
+    
+    /* Transiciones */
+    --transition-speed: 0.3s;
+}
+
+/* Estilos base para modo oscuro */
+body.dark-mode {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+/* Navbar superior en modo oscuro */
+body.dark-mode .top-navbar {
+    background-color: var(--accent-color);
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+/* Contenido principal en modo oscuro */
+body.dark-mode .main-content {
+    background-color: var(--bg-primary);
+}
+
+/* Secciones y tarjetas en modo oscuro */
+body.dark-mode .config-section,
+body.dark-mode .feedback-section,
+body.dark-mode .profile-section,
+body.dark-mode .account-form,
+body.dark-mode .book-item,
+body.dark-mode .form-container,
+body.dark-mode .section {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    box-shadow: 0 3px 10px var(--shadow-color);
+}
+
+/* Headers de sección en modo oscuro */
+body.dark-mode .config-header,
+body.dark-mode .section-title {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+/* Inputs en modo oscuro */
+body.dark-mode .form-input,
+body.dark-mode .form-control,
+body.dark-mode input,
+body.dark-mode textarea {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .form-input:focus,
+body.dark-mode .form-control:focus,
+body.dark-mode input:focus,
+body.dark-mode textarea:focus {
+    background-color: var(--bg-secondary);
+    border-color: var(--accent-color);
+}
+
+/* Botones en modo oscuro */
+body.dark-mode .btn-primary,
+body.dark-mode .submit-btn,
+body.dark-mode .read-btn,
+body.dark-mode .send-btn {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+body.dark-mode .btn-primary:hover,
+body.dark-mode .submit-btn:hover,
+body.dark-mode .read-btn:hover,
+body.dark-mode .send-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Botones secundarios en modo oscuro */
+body.dark-mode .btn-secondary {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+/* Buscador en modo oscuro */
+body.dark-mode .search-container {
+    background-color: var(--accent-color);
+}
+
+body.dark-mode .search-box {
+    background-color: var(--bg-secondary);
+}
+
+body.dark-mode .search-box input {
+    color: var(--text-primary);
+}
+
+/* Resultados de búsqueda en modo oscuro */
+body.dark-mode .search-results {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+body.dark-mode .result-item:hover {
+    background-color: var(--bg-tertiary);
+}
+
+/* Filtros en modo oscuro */
+body.dark-mode .filter-btn {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .filter-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Estado de libros en modo oscuro */
+body.dark-mode .book-status {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+}
+
+/* Meta información de libros en modo oscuro */
+body.dark-mode .meta-item {
+    background-color: var(--bg-tertiary);
+}
+
+body.dark-mode .meta-label {
+    color: var(--text-secondary);
+}
+
+body.dark-mode .meta-value {
+    color: var(--text-primary);
+}
+
+/* Mensajes de estado en modo oscuro */
+body.dark-mode .status-message {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .success-message {
+    background-color: #1b5e20;
+    color: #c8e6c9;
+    border-color: #2e7d32;
+}
+
+/* Navbar inferior en modo oscuro */
+body.dark-mode .bottom-navbar {
+    background-color: var(--accent-color);
+    box-shadow: 0 -2px 10px var(--shadow-color);
+}
+
+/* Elementos activos en modo oscuro */
+body.dark-mode .nav-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Estilos específicos para elementos de toggle de modo oscuro */
+.dark-mode-toggle,
+#darkModeSwitch {
+    accent-color: var(--accent-color);
+}
+
+.dark-mode-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.dark-mode-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.dark-mode-btn .fa-sun {
+    color: var(--accent-color);
+}
+
+.dark-mode-btn .fa-moon {
+    color: white;
+}
+
+/* Transiciones suaves para todos los elementos */
+* {
+    transition: background-color var(--transition-speed) ease,
+                color var(--transition-speed) ease,
+                border-color var(--transition-speed) ease,
+                box-shadow var(--transition-speed) ease;
+}
+
