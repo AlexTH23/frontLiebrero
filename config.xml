@@ -1,15 +1,25 @@
-<?xml version='1.0' encoding='utf-8'?>
 <widget id="com.librero.joyas" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Liebrero</name>
     <description>Aplicacion de gestion de libros y publicaciones online</description>
     <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
         Team Rivals
     </author>
-<platform name="android">
-  <allow-intent href="*" />
-  <access origin="*" />
-</platform>
-    <content src="index.html" />
+
+    <!-- Icono principal -->
+<icon src="iconoApp.png" />
+
+    <platform name="android">
+        <allow-intent href="*" />
+        <access origin="*" />
+        <!-- Icono específico para Android -->
+        <icon src="img/iconoApp.jpg" density="mdpi" />
+        <icon src="img/iconoApp.jpg" density="hdpi" />
+        <icon src="img/iconoApp.jpg" density="xhdpi" />
+        <icon src="img/iconoApp.jpg" density="xxhdpi" />
+        <icon src="img/iconoApp.jpg" density="xxxhdpi" />
+    </platform>
+
+    <content src="login.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
 </widget>
